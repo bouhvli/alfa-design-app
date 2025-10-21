@@ -13,6 +13,8 @@ import { ClientBudgetChart } from "./clinet-budget"
 import { UpcomingMilestonesChart } from "./up-comming-milestones-chart"
 import { costAnalysisData } from "@/lib/cost-analysis-data"
 import { CostAnalysisCard } from "./cost-analysis-card"
+import { UniversalDialog } from "./universal-dialog"
+import { AddProjectDialogEnhanced } from "./add-project-dialog-enhanced"
 
 export function Dashboard() {
   return (
@@ -32,7 +34,7 @@ export function Dashboard() {
             <option>This Year</option>
             <option>All Time</option>
           </select>
-          <Button>New Project</Button>
+          <AddProjectDialogEnhanced />
         </div>
       </div>
 

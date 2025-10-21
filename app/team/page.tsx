@@ -144,7 +144,7 @@ export default function TeamPage() {
                 <div className="flex flex-col gap-4">
                   {/* Header with avatar and basic info */}
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-600 rounded-md flex items-center justify-center">
                       <span className="text-lg font-bold text-white">
                         {member.name
                           .split(" ")

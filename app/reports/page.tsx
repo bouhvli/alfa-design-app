@@ -138,7 +138,7 @@ export default function ReportsPage() {
                       <div className="flex gap-4">
                         <span className="text-sm text-gray-600">
                           Revenue:{" "}
-                          <span className="font-semibold text-primary">€{(data.revenue / 1000).toFixed(0)}k</span>
+                          <span className="font-semibold text-primary-foreground">€{(data.revenue / 1000).toFixed(0)}k</span>
                         </span>
                         <span className="text-sm text-gray-600">
                           Profit:{" "}
@@ -155,7 +155,7 @@ export default function ReportsPage() {
                       </div>
                       <div className="flex-1 bg-gray-200 rounded-full h-2">
                         <div
-                          className="bg-indigo-600 h-2 rounded-full"
+                          className="bg-indigo-500 h-2 rounded-full"
                           style={{ width: `${(data.profit / 50000) * 100}%` }}
                         />
                       </div>
@@ -187,7 +187,7 @@ export default function ReportsPage() {
                     <span className="text-sm font-semibold text-gray-900">35%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-blue-600 h-2 rounded-full" style={{ width: "35%" }} />
+                    <div className="bg-blue-400 h-2 rounded-full" style={{ width: "35%" }} />
                   </div>
                 </div>
 
@@ -197,7 +197,7 @@ export default function ReportsPage() {
                     <span className="text-sm font-semibold text-gray-900">28%</span>
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-purple-600 h-2 rounded-full" style={{ width: "28%" }} />
+                    <div className="bg-purple-500 h-2 rounded-full" style={{ width: "28%" }} />
                   </div>
                 </div>
 
@@ -271,7 +271,7 @@ export default function ReportsPage() {
                         <div className="flex items-center gap-2">
                           <div className="flex-1 w-24 bg-gray-200 rounded-full h-2">
                             <div
-                              className="bg-indigo-600 h-2 rounded-full"
+                              className="bg-indigo-500 h-2 rounded-full"
                               style={{ width: `${(project.profit / 30000) * 100}%` }}
                             />
                           </div>
