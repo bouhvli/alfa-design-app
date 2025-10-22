@@ -6,11 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { 
-  Search, 
-  Filter, 
-  Plus, 
-  MoreVertical, 
+import {
+  Search,
+  Filter,
+  Plus,
+  MoreVertical,
   Calendar,
   Users,
   Target,
@@ -36,8 +36,8 @@ const initialProjects = [
     status: "In Progress",
     budget: 85000,
     spent: 65200,
-    startDate: "2023-09-15",
-    deadline: "2023-12-15",
+    startDate: "2025-09-15",
+    deadline: "2025-12-15",
     team: 4,
     progress: 76,
     profitMargin: 32
@@ -50,8 +50,8 @@ const initialProjects = [
     status: "Planning",
     budget: 120000,
     spent: 28500,
-    startDate: "2023-11-01",
-    deadline: "2024-03-15",
+    startDate: "2025-11-01",
+    deadline: "2025-03-15",
     team: 6,
     progress: 24,
     profitMargin: 28
@@ -64,8 +64,8 @@ const initialProjects = [
     status: "Completed",
     budget: 250000,
     spent: 235000,
-    startDate: "2023-05-10",
-    deadline: "2023-11-30",
+    startDate: "2025-05-10",
+    deadline: "2025-11-30",
     team: 8,
     progress: 100,
     profitMargin: 35
@@ -78,8 +78,8 @@ const initialProjects = [
     status: "In Progress",
     budget: 180000,
     spent: 142000,
-    startDate: "2023-08-20",
-    deadline: "2024-02-28",
+    startDate: "2024-08-20",
+    deadline: "2025-02-28",
     team: 7,
     progress: 79,
     profitMargin: 31
@@ -93,7 +93,7 @@ const initialProjects = [
     budget: 300000,
     spent: 45000,
     startDate: "2024-01-15",
-    deadline: "2024-08-30",
+    deadline: "2025-08-30",
     team: 10,
     progress: 15,
     profitMargin: 29
@@ -111,7 +111,7 @@ export default function ProjectsPage() {
   const filteredProjects = projects
     .filter(project => {
       const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           project.client.toLowerCase().includes(searchTerm.toLowerCase())
+        project.client.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesStatus = statusFilter === "all" || project.status === statusFilter
       const matchesType = typeFilter === "all" || project.type === typeFilter
       return matchesSearch && matchesStatus && matchesType
@@ -259,7 +259,7 @@ export default function ProjectsPage() {
                     className="pl-10"
                   />
                 </div>
-                
+
                 <div className="flex gap-2 w-full sm:w-auto">
                   <select
                     value={statusFilter}

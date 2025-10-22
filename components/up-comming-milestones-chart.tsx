@@ -13,7 +13,7 @@ const milestoneData = [
     {
         project: "Riverfront Apartment",
         milestone: "Final Delivery",
-        date: "Dec 15, 2023",
+        date: "Dec 15, 2025",
         daysLeft: 3,
         status: "on-track" as const,
         priority: "high" as const,
@@ -26,7 +26,7 @@ const milestoneData = [
     {
         project: "Office Renovation",
         milestone: "Client Review",
-        date: "Dec 18, 2023",
+        date: "Dec 18, 2025",
         daysLeft: 6,
         status: "at-risk" as const,
         priority: "critical" as const,
@@ -39,7 +39,7 @@ const milestoneData = [
     {
         project: "Luxury Villa",
         milestone: "Material Selection",
-        date: "Dec 20, 2023",
+        date: "Dec 20, 2025",
         daysLeft: 8,
         status: "on-track" as const,
         priority: "medium" as const,
@@ -52,7 +52,7 @@ const milestoneData = [
     {
         project: "Boutique Hotel",
         milestone: "Design Approval",
-        date: "Dec 22, 2023",
+        date: "Dec 22, 2025",
         daysLeft: 10,
         status: "delayed" as const,
         priority: "high" as const,
