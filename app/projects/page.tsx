@@ -180,9 +180,11 @@ export default function ProjectsPage() {
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-sm font-medium text-gray-600">Total Projects</CardTitle>
-                <Target className="h-4 w-4 text-gray-500" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Target className="h-6 w-6 text-primary-foreground" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">{projects.length}</div>
@@ -195,14 +197,16 @@ export default function ProjectsPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Active Projects</CardTitle>
-                <Users className="h-4 w-4 text-blue-500" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Users className="h-6 w-46 text-primary-foreground" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">
                   {projects.filter(p => p.status === "In Progress").length}
                 </div>
                 <p className="text-xs text-gray-600 mt-1">
-                  <span className="text-blue-600 font-medium">3</span> teams working
+                  <span className="text-primary-foreground font-medium">3</span> teams working
                 </p>
               </CardContent>
             </Card>
@@ -210,7 +214,9 @@ export default function ProjectsPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Total Budget</CardTitle>
-                <ArrowUp className="h-4 w-4 text-green-500" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <ArrowUp className="h-4 w-4 text-primary-foreground" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">
@@ -225,7 +231,9 @@ export default function ProjectsPage() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Avg. Progress</CardTitle>
-                <ArrowDown className="h-4 w-4 text-orange-500" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <ArrowDown className="h-4 w-4 text-primary-foreground" />
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-gray-900">

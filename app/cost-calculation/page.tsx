@@ -228,7 +228,7 @@ export default function CostCalculationPage() {
                             setNewMaterial({ ...newMaterial, unit: value })
                           }
                         >
-                          <SelectTrigger className="mt-1">
+                          <SelectTrigger className="mt-1 w-full">
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
@@ -342,7 +342,7 @@ export default function CostCalculationPage() {
                 <div className="space-y-4">
                   <div>
                     <Label className="text-sm font-medium text-gray-700">Profit Margin</Label>
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className="flex items-center gap-3 mt-2 w-full">
                       <Input
                         type="number"
                         value={profitMargin}
@@ -353,9 +353,9 @@ export default function CostCalculationPage() {
                         min="0"
                         max="100"
                       />
-                      <span className="text-gray-600 w-8">%</span>
+                      <span className="text-gray-600">%</span>
                     </div>
-                    <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="mt-4 h-2 bg-gray-200 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-success rounded-full transition-all duration-300"
                         style={{ width: `${profitMargin}%` }}
