@@ -18,11 +18,11 @@ export function ProjectTypeChart() {
   const totalProjects = data.reduce((sum, item) => sum + item.projects, 0)
   const totalProfit = data.reduce((sum, item) => sum + item.profit, 0)
   const avgProfit = Math.round(totalProfit / totalProjects)
-  
+
   const typeWithMostProjects = data.reduce((max, item) => 
     item.projects > max.projects ? item : max
   )
-  
+
   const typeWithMostProfit = data.reduce((max, item) => 
     item.profit > max.profit ? item : max
   )
@@ -30,7 +30,7 @@ export function ProjectTypeChart() {
   return (
     <div className="space-y-4">
       <ResponsiveContainer width="100%" height={250}>
-        <BarChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 40 }}>
+        <BarChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 10 }}>
           <XAxis
             dataKey="type"
             stroke="#6b7280"
@@ -53,11 +53,11 @@ export function ProjectTypeChart() {
               if (active && payload && payload.length) {
                 return (
                   <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-sm">
-                    <p className="font-medium text-gray-900">{label}</p>
+                    <p className="font-medium text-primary-foreground">{label}</p>
                     <div className="mt-2 space-y-1">
                       <div className="flex items-center justify-between gap-4 text-sm">
                         <span className="text-gray-600">Profit:</span>
-                        <span className="font-medium text-gray-900">
+                        <span className="font-medium text-primary-foreground">
                           €{payload[0].value?.toLocaleString()}
                         </span>
                       </div>
@@ -85,7 +85,7 @@ export function ProjectTypeChart() {
           </Bar>
         </BarChart>
       </ResponsiveContainer>
-      
+
       {/* Color Legend */}
       <div className="flex flex-wrap items-center justify-center gap-4 text-xs">
         {data.map((item, index) => (
@@ -108,7 +108,7 @@ export function ProjectTypeChart() {
           </div>
           <span className="font-medium text-gray-900">€{avgProfit.toLocaleString()}</span>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FolderOpen className="h-4 w-4 text-green-500" />

@@ -15,20 +15,48 @@ import { costAnalysisData } from "@/lib/cost-analysis-data"
 import { CostAnalysisCard } from "./cost-analysis-card"
 import { UniversalDialog } from "./universal-dialog"
 import { AddProjectDialogEnhanced } from "./add-project-dialog-enhanced"
+import { useEffect } from "react"
 
 export function Dashboard() {
+  // Prevent zooming
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    const handleKeydown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && (e.key === '+' || e.key === '-' || e.key === '0')) || 
+          (e.ctrlKey && e.key === 'MouseScroll')) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener('keydown', handleKeydown);
+
+    return () => {
+      document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener('keydown', handleKeydown);
+    };
+  }, []);
+
   return (
-    <div className="p-8">
+    <div className="p-8 fixed-scale" style={{ zoom: 1, transform: 'scale(1)' }}>
       {/* Header */}
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Project Dashboard</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <h1 className="text-3xl font-bold text-foreground" style={{ fontSize: '24px' }}>Project Dashboard</h1>
+          <p className="mt-1 text-sm text-muted-foreground" style={{ fontSize: '14px' }}>
             Comprehensive overview of your interior design projects and business performance
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <select className="rounded-lg border border-border bg-card px-4 py-2 pl-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring">
+          <select 
+            className="rounded-lg border border-border bg-card px-4 py-2 pl-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            style={{ fontSize: '14px', height: '40px' }}
+          >
             <option>Last 30 Days</option>
             <option>Last 90 Days</option>
             <option>This Year</option>
@@ -39,7 +67,7 @@ export function Dashboard() {
       </div>
 
       {/* Top Metrics - Enhanced */}
-      <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-5">
+      <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-5" style={{ gap: '24px' }}>
         <MetricCard
           title="Active Projects"
           value="12"
@@ -83,17 +111,12 @@ export function Dashboard() {
       </div>
 
       {/* Main Charts Grid */}
-      <div className="mb-8 grid gap-6 lg:grid-cols-3">
+      <div className="mb-8 grid gap-6 lg:grid-cols-3" style={{ gap: '24px' }}>
         {/* Profit & Loss Trend */}
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2" style={{ minHeight: '300px' }}>
           <CardHeader className="flex flex-col items-start justify-between">
-            <CardTitle className="text-base font-medium">Profit & Loss Trend</CardTitle>
-            <CardDescription>The profit and loss trend for last 8 months</CardDescription>
-            <div className="flex gap-2">
-              {/* <Button variant="outline" size="sm">Revenue</Button>
-              <Button variant="outline" size="sm">Profit</Button>
-              <Button variant="outline" size="sm">Both</Button> */}
-            </div>
+            <CardTitle className="text-base font-medium" style={{ fontSize: '16px' }}>Profit & Loss Trend</CardTitle>
+            <CardDescription style={{ fontSize: '14px' }}>The profit and loss trend for last 8 months</CardDescription>
           </CardHeader>
           <CardContent>
             <ProfitChart />
@@ -105,12 +128,12 @@ export function Dashboard() {
       </div>
 
       {/* Second Row Charts */}
-      <div className="mb-8 grid gap-6 lg:grid-cols-3">
+      <div className="mb-8 grid gap-6 lg:grid-cols-3" style={{ gap: '24px' }}>
         {/* Project Type Performance */}
-        <Card>
+        <Card style={{ minHeight: '300px' }}>
           <CardHeader>
-            <CardTitle className="text-base font-medium">Profit by Project Type</CardTitle>
-            <CardDescription>Current project types distribution</CardDescription>
+            <CardTitle className="text-base font-medium" style={{ fontSize: '16px' }}>Profit by Project Type</CardTitle>
+            <CardDescription style={{ fontSize: '14px' }}>Current project types distribution</CardDescription>
           </CardHeader>
           <CardContent>
             <ProjectTypeChart />
@@ -127,12 +150,12 @@ export function Dashboard() {
       {/* Cost Analysis - Enhanced */}
       <div className="mb-8">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-foreground">Cost Analysis</h2>
-          <Button variant="ghost" size="sm" className="text-primary">
+          <h2 className="text-xl font-semibold text-foreground" style={{ fontSize: '20px' }}>Cost Analysis</h2>
+          <Button variant="ghost" size="sm" className="text-primary" style={{ fontSize: '14px' }}>
             View Detailed Report
           </Button>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" style={{ gap: '16px' }}>
           {costAnalysisData.map((item) => (
             <CostAnalysisCard
               key={item.id}
@@ -157,14 +180,15 @@ export function Dashboard() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>All Projects</CardTitle>
+            <CardTitle style={{ fontSize: '18px' }}>All Projects</CardTitle>
             <div className="flex items-center gap-3">
               <input
                 type="text"
                 placeholder="Search projects..."
                 className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                style={{ fontSize: '14px', height: '36px' }}
               />
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" style={{ fontSize: '14px', height: '36px' }}>
                 Export
               </Button>
             </div>

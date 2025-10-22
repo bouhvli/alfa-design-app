@@ -1,37 +1,23 @@
+// components/sidebar-client.tsx
 "use client"
+
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import {
-  LayoutDashboard,
-  Calculator,
-  FolderOpen,
-  Clock,
-  TrendingUp,
-  Settings,
-  Package,
-  Users,
-  Briefcase,
-  Menu,
-  X,
-  Search,
-} from "lucide-react"
-import { cn } from "@/lib/utils"
 import { useState, useEffect } from "react"
+import { Menu, X, Search } from "lucide-react"
+import { cn } from "@/lib/utils"
 
-const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Projects", href: "/projects", icon: FolderOpen },
-  { name: "Cost Calculation", href: "/cost-calculation", icon: Calculator },
-  { name: "Time Registration", href: "/time-registration", icon: Clock },
-  { name: "Clients", href: "/clients", icon: Briefcase },
-  { name: "Materials", href: "/materials", icon: Package },
-  { name: "Team", href: "/team", icon: Users },
-  { name: "Reports", href: "/reports", icon: TrendingUp },
-  { name: "Settings", href: "/settings", icon: Settings },
-]
+interface NavigationItem {
+  name: string
+  href: string
+  icon: React.ComponentType<{ className?: string }>
+}
 
-export function Sidebar() {
-  const pathname = usePathname()
+interface SidebarClientProps {
+  navigation: NavigationItem[]
+  pathname: string
+}
+
+export function SidebarClient({ navigation, pathname }: SidebarClientProps) {
   const [loading, setLoading] = useState<string | null>(null)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)

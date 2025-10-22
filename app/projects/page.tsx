@@ -1,131 +1,165 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { Sidebar } from "@/components/sidebar";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useState } from "react"
+import { Sidebar } from "@/components/sidebar"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { 
+  Search, 
+  Filter, 
+  Plus, 
+  MoreVertical, 
+  Calendar,
+  Users,
+  Target,
+  ArrowUp,
+  ArrowDown,
+  Eye
+} from "lucide-react"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Plus, Trash2, Calculator, Save, Anvil, HardHat, Download, Copy } from "lucide-react";
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { AddProjectDialogEnhanced } from "@/components/add-project-dialog-enhanced"
 
-// Define types for materials and labor items
-type Material = {
-  id: number;
-  name: string;
-  quantity: number;
-  unit: string;
-  pricePerUnit: number;
-  total: number;
-  type: "material";
-};
+// Mock data for projects
+const initialProjects = [
+  {
+    id: 1,
+    name: "Riverfront Apartment",
+    type: "Residential",
+    client: "Sarah Johnson",
+    status: "In Progress",
+    budget: 85000,
+    spent: 65200,
+    startDate: "2023-09-15",
+    deadline: "2023-12-15",
+    team: 4,
+    progress: 76,
+    profitMargin: 32
+  },
+  {
+    id: 2,
+    name: "Office Renovation",
+    type: "Commercial",
+    client: "TechCorp Inc.",
+    status: "Planning",
+    budget: 120000,
+    spent: 28500,
+    startDate: "2023-11-01",
+    deadline: "2024-03-15",
+    team: 6,
+    progress: 24,
+    profitMargin: 28
+  },
+  {
+    id: 3,
+    name: "Luxury Villa",
+    type: "Residential",
+    client: "Robert Chen",
+    status: "Completed",
+    budget: 250000,
+    spent: 235000,
+    startDate: "2023-05-10",
+    deadline: "2023-11-30",
+    team: 8,
+    progress: 100,
+    profitMargin: 35
+  },
+  {
+    id: 4,
+    name: "Boutique Hotel",
+    type: "Hospitality",
+    client: "Grand Hotels Group",
+    status: "In Progress",
+    budget: 180000,
+    spent: 142000,
+    startDate: "2023-08-20",
+    deadline: "2024-02-28",
+    team: 7,
+    progress: 79,
+    profitMargin: 31
+  },
+  {
+    id: 5,
+    name: "Medical Center",
+    type: "Healthcare",
+    client: "City Health Services",
+    status: "Planning",
+    budget: 300000,
+    spent: 45000,
+    startDate: "2024-01-15",
+    deadline: "2024-08-30",
+    team: 10,
+    progress: 15,
+    profitMargin: 29
+  }
+]
 
-type LaborItem = {
-  id: number;
-  task: string;
-  hours: number;
-  hourlyRate: number;
-  total: number;
-  type: "labor";
-};
+export default function ProjectsPage() {
+  const [projects, setProjects] = useState(initialProjects)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [statusFilter, setStatusFilter] = useState("all")
+  const [typeFilter, setTypeFilter] = useState("all")
+  const [sortBy, setSortBy] = useState("name")
 
-type CostItem = Material | LaborItem;
+  // Filter and sort projects
+  const filteredProjects = projects
+    .filter(project => {
+      const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                           project.client.toLowerCase().includes(searchTerm.toLowerCase())
+      const matchesStatus = statusFilter === "all" || project.status === statusFilter
+      const matchesType = typeFilter === "all" || project.type === typeFilter
+      return matchesSearch && matchesStatus && matchesType
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "name":
+          return a.name.localeCompare(b.name)
+        case "budget":
+          return b.budget - a.budget
+        case "progress":
+          return b.progress - a.progress
+        case "deadline":
+          return new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+        default:
+          return 0
+      }
+    })
 
-export default function CostCalculationPage() {
-  // Initialize state with empty arrays
-  const [costItems, setCostItems] = useState<CostItem[]>([]);
-  const [profitMargin, setProfitMargin] = useState(25);
-  const [activeTab, setActiveTab] = useState<"materials" | "labor">("materials");
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Completed":
+        return "bg-green-100 text-green-800 border-green-200"
+      case "In Progress":
+        return "bg-blue-100 text-blue-800 border-blue-200"
+      case "Planning":
+        return "bg-yellow-100 text-yellow-800 border-yellow-200"
+      case "On Hold":
+        return "bg-red-100 text-red-800 border-red-200"
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200"
+    }
+  }
 
-  // State for the new material form
-  const [newMaterial, setNewMaterial] = useState<Omit<Material, "id" | "total" | "type">>({
-    name: "",
-    quantity: 0,
-    unit: "m²",
-    pricePerUnit: 0,
-  });
-
-  // State for the new labor form
-  const [newLabor, setNewLabor] = useState<Omit<LaborItem, "id" | "total" | "type">>({
-    task: "",
-    hours: 0,
-    hourlyRate: 65,
-  });
-
-  // Function to add a new material from the form state
-  const addMaterial = () => {
-    if (newMaterial.name.trim() === "") return;
-
-    const total = newMaterial.quantity * newMaterial.pricePerUnit;
-    const material: Material = {
-      id: Date.now(),
-      ...newMaterial,
-      total,
-      type: "material",
-    };
-    setCostItems([...costItems, material]);
-
-    // Reset the form state after adding
-    setNewMaterial({
-      name: "",
-      quantity: 0,
-      unit: "m²",
-      pricePerUnit: 0,
-    });
-  };
-
-  // Function to add a new labor item from the form state
-  const addLaborItem = () => {
-    if (newLabor.task.trim() === "") return;
-
-    const total = newLabor.hours * newLabor.hourlyRate;
-    const labor: LaborItem = {
-      id: Date.now(),
-      ...newLabor,
-      total,
-      type: "labor",
-    };
-    setCostItems([...costItems, labor]);
-
-    // Reset the form state after adding
-    setNewLabor({
-      task: "",
-      hours: 0,
-      hourlyRate: 65,
-    });
-  };
-
-  // Function to remove an item by ID
-  const removeItem = (id: number) => {
-    setCostItems(costItems.filter((item) => item.id !== id));
-  };
-
-  // Function to clear all items
-  const clearAllItems = () => {
-    setCostItems([]);
-  };
-
-  // Function to copy total price to clipboard
-  const copyTotalPrice = () => {
-    navigator.clipboard.writeText(`€${totalPrice.toFixed(2)}`);
-  };
-
-  // Calculate totals
-  const materials = costItems.filter((item): item is Material => item.type === "material");
-  const laborItems = costItems.filter((item): item is LaborItem => item.type === "labor");
-
-  const totalMaterials = materials.reduce((sum, m) => sum + m.total, 0);
-  const totalLabor = laborItems.reduce((sum, l) => sum + l.total, 0);
-  const subtotal = totalMaterials + totalLabor;
-  const profitAmount = subtotal * (profitMargin / 100);
-  const totalPrice = subtotal + profitAmount;
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case "Residential":
+        return "bg-purple-100 text-purple-800 border-purple-200"
+      case "Commercial":
+        return "bg-orange-100 text-orange-800 border-orange-200"
+      case "Hospitality":
+        return "bg-pink-100 text-pink-800 border-pink-200"
+      case "Healthcare":
+        return "bg-teal-100 text-teal-800 border-teal-200"
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-200"
+    }
+  }
 
   return (
     <div className="flex h-screen bg-gray-50">
@@ -135,409 +169,222 @@ export default function CostCalculationPage() {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Cost Calculator</h1>
-              <p className="text-gray-600 mt-1">Quickly calculate project costs and generate quotes</p>
+              <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
+              <p className="text-gray-600 mt-1">Manage and track all your interior design projects</p>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline" onClick={clearAllItems}>
-                <Trash2 className="w-4 h-4 mr-2" />
-                Clear All
-              </Button>
-              <Button>
-                <Download className="w-4 h-4 mr-2" />
-                Save Quote
-              </Button>
+              <AddProjectDialogEnhanced />
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* LEFT COLUMN - QUICK SUMMARY & FORMS */}
-            <div className="lg:col-span-1 space-y-6">
-              {/* Quick Summary Cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <Card className="p-4 bg-primary/10 border-primary">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs text-primary font-medium">Materials</p>
-                      <p className="text-lg font-bold text-primary mt-1">
-                        €{totalMaterials.toFixed(2)}
-                      </p>
-                      <p className="text-xs text-primary">{materials.length} items</p>
-                    </div>
-                    <Anvil className="w-8 h-8 text-primary" />
-                  </div>
-                </Card>
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Total Projects</CardTitle>
+                <Target className="h-4 w-4 text-gray-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">{projects.length}</div>
+                <p className="text-xs text-gray-600 mt-1">
+                  <span className="text-green-600 font-medium">+2</span> this month
+                </p>
+              </CardContent>
+            </Card>
 
-                <Card className="p-4 bg-green-50 border-green-200">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-xs text-success font-medium">Labor</p>
-                      <p className="text-lg font-bold text-success mt-1">
-                        €{totalLabor.toFixed(2)}
-                      </p>
-                      <p className="text-xs text-success">{laborItems.length} tasks</p>
-                    </div>
-                    <HardHat className="w-8 h-8 text-success" />
-                  </div>
-                </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Active Projects</CardTitle>
+                <Users className="h-4 w-4 text-blue-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">
+                  {projects.filter(p => p.status === "In Progress").length}
+                </div>
+                <p className="text-xs text-gray-600 mt-1">
+                  <span className="text-blue-600 font-medium">3</span> teams working
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Total Budget</CardTitle>
+                <ArrowUp className="h-4 w-4 text-green-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">
+                  €{projects.reduce((sum, p) => sum + p.budget, 0).toLocaleString()}
+                </div>
+                <p className="text-xs text-gray-600 mt-1">
+                  <span className="text-green-600 font-medium">12%</span> vs last quarter
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-sm font-medium text-gray-600">Avg. Progress</CardTitle>
+                <ArrowDown className="h-4 w-4 text-orange-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold text-gray-900">
+                  {Math.round(projects.reduce((sum, p) => sum + p.progress, 0) / projects.length)}%
+                </div>
+                <p className="text-xs text-gray-600 mt-1">
+                  <span className="text-orange-600 font-medium">-3%</span> from target
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Filters and Search */}
+          <Card className="mb-6">
+            <CardContent className=" w-full">
+              <div className="flex flex-col sm:flex-row gap-4 items-center w-full justify-between">
+                <div className="relative flex-1 w-full">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input
+                    placeholder="Search projects or clients..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                
+                <div className="flex gap-2 w-full sm:w-auto">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="Planning">Planning</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="On Hold">On Hold</option>
+                  </select>
+
+                  <select
+                    value={typeFilter}
+                    onChange={(e) => setTypeFilter(e.target.value)}
+                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="all">All Types</option>
+                    <option value="Residential">Residential</option>
+                    <option value="Commercial">Commercial</option>
+                    <option value="Hospitality">Hospitality</option>
+                    <option value="Healthcare">Healthcare</option>
+                  </select>
+
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="name">Sort by Name</option>
+                    <option value="budget">Sort by Budget</option>
+                    <option value="progress">Sort by Progress</option>
+                    <option value="deadline">Sort by Deadline</option>
+                  </select>
+                </div>
               </div>
+            </CardContent>
+          </Card>
 
-              {/* Tabbed Forms */}
-              <Card className="p-6">
-                <div className="flex border-b">
-                  <button
-                    className={`flex-1 py-2 text-sm font-medium ${activeTab === "materials"
-                        ? "text-primary border-b-2 border-primary"
-                        : "text-gray-500 hover:text-gray-700"
-                      }`}
-                    onClick={() => setActiveTab("materials")}
-                  >
-                    Add Material
-                  </button>
-                  <button
-                    className={`flex-1 py-2 text-sm font-medium ${activeTab === "labor"
-                        ? "text-green-600 border-b-2 border-green-600"
-                        : "text-gray-500 hover:text-gray-700"
-                      }`}
-                    onClick={() => setActiveTab("labor")}
-                  >
-                    Add Labor
-                  </button>
-                </div>
-
-                {activeTab === "materials" ? (
-                  <div className="space-y-4">
-                    <div>
-                      <Label className="text-sm font-medium text-gray-700">Material Name *</Label>
-                      <Input
-                        value={newMaterial.name}
-                        onChange={(e) =>
-                          setNewMaterial({ ...newMaterial, name: e.target.value })
-                        }
-                        placeholder="e.g., Oak Flooring"
-                        className="mt-1"
-                      />
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {filteredProjects.map((project) => (
+              <Card key={project.id} className="p-6 hover:shadow-lg transition-shadow">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-lg font-semibold text-gray-900">{project.name}</h3>
+                      <Badge className={getStatusColor(project.status)}>
+                        {project.status}
+                      </Badge>
+                      <Badge variant="outline" className={getTypeColor(project.type)}>
+                        {project.type}
+                      </Badge>
                     </div>
-
-                    <div className="grid grid-cols-3 gap-3">
-                      <div>
-                        <Label className="text-sm font-medium text-gray-700">Unit</Label>
-                        <Select
-                          value={newMaterial.unit}
-                          onValueChange={(value) =>
-                            setNewMaterial({ ...newMaterial, unit: value })
-                          }
-                        >
-                          <SelectTrigger className="mt-1">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="m²">m²</SelectItem>
-                            <SelectItem value="m">m</SelectItem>
-                            <SelectItem value="pcs">pcs</SelectItem>
-                            <SelectItem value="kg">kg</SelectItem>
-                            <SelectItem value="L">L</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-700">Qty</Label>
-                        <Input
-                          type="number"
-                          value={newMaterial.quantity}
-                          onChange={(e) =>
-                            setNewMaterial({
-                              ...newMaterial,
-                              quantity: Number.parseFloat(e.target.value) || 0,
-                            })
-                          }
-                          className="mt-1"
-                          min="0"
-                          step="0.1"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-700">Price/Unit</Label>
-                        <Input
-                          type="number"
-                          value={newMaterial.pricePerUnit}
-                          onChange={(e) =>
-                            setNewMaterial({
-                              ...newMaterial,
-                              pricePerUnit: Number.parseFloat(e.target.value) || 0,
-                            })
-                          }
-                          className="mt-1"
-                          min="0"
-                          step="0.01"
-                        />
-                      </div>
-                    </div>
-
-                    <Button onClick={addMaterial} className="w-full">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Material
-                    </Button>
+                    <p className="text-sm text-gray-600">Client: {project.client}</p>
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div>
-                      <Label className="text-sm font-medium text-gray-700">Task Description *</Label>
-                      <Input
-                        value={newLabor.task}
-                        onChange={(e) =>
-                          setNewLabor({ ...newLabor, task: e.target.value })
-                        }
-                        placeholder="e.g., Floor Installation"
-                        className="mt-1"
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <Label className="text-sm font-medium text-gray-700">Hours</Label>
-                        <Input
-                          type="number"
-                          value={newLabor.hours}
-                          onChange={(e) =>
-                            setNewLabor({
-                              ...newLabor,
-                              hours: Number.parseFloat(e.target.value) || 0,
-                            })
-                          }
-                          className="mt-1"
-                          min="0"
-                          step="0.5"
-                        />
-                      </div>
-                      <div>
-                        <Label className="text-sm font-medium text-gray-700">Rate (€/hr)</Label>
-                        <Input
-                          type="number"
-                          value={newLabor.hourlyRate}
-                          onChange={(e) =>
-                            setNewLabor({
-                              ...newLabor,
-                              hourlyRate: Number.parseFloat(e.target.value) || 0,
-                            })
-                          }
-                          className="mt-1"
-                          min="0"
-                          step="1"
-                        />
-                      </div>
-                    </div>
-
-                    <Button onClick={addLaborItem} className="w-full bg-success text-white">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Labor
-                    </Button>
-                  </div>
-                )}
-              </Card>
-
-              {/* Profit Margin Control */}
-              <Card className="p-6">
-                <h3 className="text-lg font-semibold text-gray-900">Profit Settings</h3>
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-sm font-medium text-gray-700">Profit Margin</Label>
-                    <div className="flex items-center gap-3 mt-2">
-                      <Input
-                        type="number"
-                        value={profitMargin}
-                        onChange={(e) =>
-                          setProfitMargin(Number.parseFloat(e.target.value) || 0)
-                        }
-                        className="flex-1"
-                        min="0"
-                        max="100"
-                      />
-                      <span className="text-gray-600 w-8">%</span>
-                    </div>
-                    <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-                      <div
-                        className="h-full bg-success rounded-full transition-all duration-300"
-                        style={{ width: `${profitMargin}%` }}
-                      />
-                    </div>
-                  </div>
-                  <div className="text-center p-3 bg-success/10 rounded-lg border border-success/10">
-                    <p className="text-sm text-success font-medium">Profit Amount</p>
-                    <p className="text-xl font-bold text-success">€{profitAmount.toFixed(2)}</p>
-                  </div>
-                </div>
-              </Card>
-            </div>
-
-            {/* RIGHT COLUMN - ITEMS LIST & FINAL QUOTE */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Items List */}
-              <Card className="p-6">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900">Cost Breakdown</h2>
-                  <span className="text-sm text-gray-500">
-                    {costItems.length} total items
-                  </span>
-                </div>
-
-                <div className="rounded-lg">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[200px]">Description</TableHead>
-                        <TableHead className="w-[100px]">Type</TableHead>
-                        <TableHead className="w-[100px] text-right">Quantity</TableHead>
-                        <TableHead className="w-[120px] text-right">Unit Price</TableHead>
-                        <TableHead className="w-[120px] text-right">Total</TableHead>
-                        <TableHead className="w-[80px]"></TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {costItems.map((item) => (
-                        <TableRow key={item.id} className="hover:bg-gray-50">
-                          <TableCell className="font-medium">
-                            {item.type === "material" ? item.name : item.task}
-                          </TableCell>
-                          <TableCell>
-                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${item.type === "material"
-                                ? "bg-primary/10 text-primary"
-                                : "bg-success/10 text-success"
-                              }`}>
-                              {item.type === "material" ? "Material" : "Labor"}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            {item.type === "material" ? (
-                              <span className="text-sm text-gray-600">
-                                {item.quantity} {item.unit}
-                              </span>
-                            ) : (
-                              <span className="text-sm text-gray-600">
-                                {item.hours} hours
-                              </span>
-                            )}
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <span className="text-sm text-gray-600">
-                              {item.type === "material" ? (
-                                <>€{item.pricePerUnit}/{item.unit}</>
-                              ) : (
-                                <>€{item.hourlyRate}/hour</>
-                              )}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right font-semibold">
-                            <span className={item.type === "material" ? "text-primary" : "text-success"}>
-                              €{item.total.toFixed(2)}
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              onClick={() => removeItem(item.id)}
-                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    {costItems.length === 0 && (
-                      <TableBody>
-                        <TableRow>
-                          <TableCell colSpan={6} className="text-center py-12 text-gray-500">
-                            <Calculator className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                            <p className="text-lg font-medium mb-2">No cost items added yet</p>
-                            <p className="text-sm">Start by adding materials or labor tasks</p>
-                          </TableCell>
-                        </TableRow>
-                      </TableBody>
-                    )}
-                    {costItems.length > 0 && (
-                      <TableFooter>
-                        <TableRow>
-                          <TableCell colSpan={4} className="font-medium">Subtotal</TableCell>
-                          <TableCell className="text-right font-bold text-gray-900">
-                            €{subtotal.toFixed(2)}
-                          </TableCell>
-                          <TableCell></TableCell>
-                        </TableRow>
-                      </TableFooter>
-                    )}
-                  </Table>
-                </div>
-              </Card>
-
-              {/* Final Quote */}
-              <Card className="p-6 bg-gradient-to-br from-primary/10 to-success/10">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900">Final Quote</h2>
-                  <Button variant="outline" size="sm" onClick={copyTotalPrice}>
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Total
-                  </Button>
-                </div>
-
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Material Costs</span>
-                        <span className="font-semibold text-gray-900">
-                          €{totalMaterials.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Labor Costs</span>
-                        <span className="font-semibold text-gray-900">
-                          €{totalLabor.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="text-gray-700 font-medium">Subtotal</span>
-                        <span className="font-semibold text-gray-900">
-                          €{subtotal.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center space-y-3 row-span-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Profit ({profitMargin}%)</span>
-                        <span className="font-semibold text-success">
-                          €{profitAmount.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="pt-2 border-t">
-                        <div className="flex justify-between items-center py-2 rounded-lg">
-                          <span className="text-lg font-semibold text-gray-900">
-                            Total Price
-                          </span>
-                          <span className="text-2xl font-bold text-primary">
-                            €{totalPrice.toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-4 border-t">
-                    <div className="flex gap-3">
-                      <Button className="flex-1">
-                        <Download className="w-4 h-4 mr-2" />
-                        Save Quote
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm">
+                        <MoreVertical className="w-4 h-4" />
                       </Button>
-                    </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>
+                        <Eye className="w-4 h-4 mr-2" />
+                        View Details
+                      </DropdownMenuItem>
+                      <DropdownMenuItem>Edit Project</DropdownMenuItem>
+                      <DropdownMenuItem className="text-red-600">
+                        Archive Project
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Budget</p>
+                    <p className="text-sm font-semibold text-gray-900">€{project.budget.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Spent</p>
+                    <p className="text-sm font-semibold text-gray-900">€{project.spent.toLocaleString()}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Start Date</p>
+                    <p className="text-sm font-semibold text-gray-900">{project.startDate}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-600 mb-1">Deadline</p>
+                    <p className="text-sm font-semibold text-gray-900">{project.deadline}</p>
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs text-gray-600">Progress</span>
+                    <span className="text-xs font-semibold text-gray-900">{project.progress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div
+                      className="bg-success h-2 rounded-full transition-all"
+                      style={{ width: `${project.progress}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between pt-4 border-t">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <Users className="w-4 h-4" />
+                    <span>{project.team} members</span>
+                  </div>
+                  <div className="text-sm font-semibold text-success">
+                    {project.profitMargin}% margin
                   </div>
                 </div>
               </Card>
-            </div>
+            ))}
           </div>
+
+          {filteredProjects.length === 0 && (
+            <Card className="text-center py-12">
+              <CardContent>
+                <Target className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No projects found</h3>
+                <p className="text-gray-600 mb-4">Try adjusting your search or filters</p>
+                <AddProjectDialogEnhanced />
+              </CardContent>
+            </Card>
+          )}
         </div>
       </main>
     </div>
-  );
+  )
 }

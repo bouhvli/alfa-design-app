@@ -28,7 +28,7 @@ export function TimelinePerformanceChart() {
   const delayedProjects = chartData.reduce((sum, project) => sum + (project.delayed > 0 ? 1 : 0), 0)
 
   return (
-    <Card style={{ border: '1px solid #e5e7eb', borderRadius: '8px' }}>
+    <Card style={{ border: '1px solid #e5e7eb', borderRadius: '16px' }}>
       <CardHeader style={{ padding: '1rem 1rem 0.5rem' }}>
         <CardTitle style={{ fontSize: '1rem', fontWeight: 500, margin: 0 }}>Timeline Performance</CardTitle>
         <CardDescription style={{ fontSize: '0.875rem', color: '#6b7280', margin: 0 }}>
