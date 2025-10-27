@@ -65,7 +65,58 @@ const projects = [
 export function ProjectsTable() {
   return (
     <div>
-      <div className="overflow-x-auto">
+      {/* Mobile Cards View */}
+      <div className="lg:hidden space-y-4">
+        {projects.map((project) => (
+          <div key={project.id} className="border border-border rounded-lg p-4 bg-card">
+            <div className="flex items-start justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <input type="checkbox" className="rounded border-border" />
+                <div>
+                  <h3 className="font-medium text-foreground text-sm">{project.name}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{project.client}</p>
+                </div>
+              </div>
+              <Badge
+                variant={project.status === "Completed" ? "default" : "secondary"}
+                className={
+                  project.status === "Completed"
+                    ? "bg-success/10 text-success hover:bg-success/20 text-xs"
+                    : "bg-primary/10 text-primary hover:bg-primary/20 text-xs"
+                }
+              >
+                {project.status}
+              </Badge>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <p className="text-muted-foreground">Start Date</p>
+                <p className="font-medium mt-1">{project.date}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Budget</p>
+                <p className="font-medium mt-1">{project.budget}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Spent</p>
+                <p className="font-medium mt-1">{project.spent}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Profit</p>
+                <p className="font-medium text-success mt-1">{project.profit}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Margin</p>
+                <p className="font-medium mt-1">{project.margin}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table View */}
+      <div className="hidden lg:block overflow-x-auto">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">
@@ -115,29 +166,33 @@ export function ProjectsTable() {
         </table>
       </div>
 
-      {/* Pagination */}
-      <div className="mt-4 flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">Showing 1-5 of 12 projects</p>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" disabled>
-            <ChevronLeft className="h-4 w-4" />
-            Previous
-          </Button>
-          <div className="flex gap-1">
-            <Button variant="default" size="sm" className="h-8 w-8 p-0">
-              1
+      {/* Pagination - Responsive */}
+      <div className="mt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-sm text-muted-foreground text-center sm:text-left">
+          Showing 1-5 of 12 projects
+        </p>
+        <div className="flex flex-col xs:flex-row items-center gap-3">
+          <div className="flex items-center gap-2 order-2 xs:order-1">
+            <Button variant="outline" size="sm" disabled className="text-xs h-8">
+              <ChevronLeft className="h-3 w-3" />
+              <span className="hidden xs:inline ml-1">Previous</span>
             </Button>
-            <Button variant="outline" size="sm" className="h-8 w-8 p-0 bg-transparent">
-              2
-            </Button>
-            <Button variant="outline" size="sm" className="h-8 w-8 p-0 bg-transparent">
-              3
+            <div className="flex gap-1">
+              <Button variant="default" size="sm" className="h-7 w-7 p-0 text-xs">
+                1
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 w-7 p-0 text-xs bg-transparent">
+                2
+              </Button>
+              <Button variant="outline" size="sm" className="h-7 w-7 p-0 text-xs bg-transparent">
+                3
+              </Button>
+            </div>
+            <Button variant="outline" size="sm" className="text-xs h-8">
+              <span className="hidden xs:inline mr-1">Next</span>
+              <ChevronRight className="h-3 w-3" />
             </Button>
           </div>
-          <Button variant="outline" size="sm">
-            Next
-            <ChevronRight className="h-4 w-4" />
-          </Button>
         </div>
       </div>
     </div>

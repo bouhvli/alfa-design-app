@@ -43,31 +43,33 @@ export function Dashboard() {
   }, []);
 
   return (
-    <div className="p-8 fixed-scale" style={{ zoom: 1, transform: 'scale(1)' }}>
+    <div className="p-4 md:p-6 lg:p-8 fixed-scale" style={{ zoom: 1, transform: 'scale(1)' }}>
       {/* Header */}
-      <div className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground" style={{ fontSize: '24px' }}>Project Dashboard</h1>
-          <p className="mt-1 text-sm text-muted-foreground" style={{ fontSize: '14px' }}>
-            Comprehensive overview of your interior design projects and business performance
-          </p>
-        </div>
-        <div className="flex items-center gap-4">
-          <select 
-            className="rounded-lg border border-border bg-card px-4 py-2 pl-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            style={{ fontSize: '14px', height: '40px' }}
-          >
-            <option>Last 30 Days</option>
-            <option>Last 90 Days</option>
-            <option>This Year</option>
-            <option>All Time</option>
-          </select>
-          <AddProjectDialogEnhanced />
+      <div className="mb-6 md:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Project Dashboard</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Comprehensive overview of your interior design projects and business performance
+            </p>
+          </div>
+          <div className="flex flex-row sm:flex-row items-stretch sm:items-center gap-3">
+            <select 
+              className="w-full sm:w-auto rounded-lg border border-border bg-card px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              style={{ fontSize: '14px', minHeight: '40px' }}
+            >
+              <option>Last 30 Days</option>
+              <option>Last 90 Days</option>
+              <option>This Year</option>
+              <option>All Time</option>
+            </select>
+            <AddProjectDialogEnhanced />
+          </div>
         </div>
       </div>
 
       {/* Top Metrics - Enhanced */}
-      <div className="mb-8 grid gap-6 md:grid-cols-2 lg:grid-cols-5" style={{ gap: '24px' }}>
+      <div className="mb-6 md:mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-6">
         <MetricCard
           title="Active Projects"
           value="12"
@@ -111,14 +113,16 @@ export function Dashboard() {
       </div>
 
       {/* Main Charts Grid */}
-      <div className="mb-8 grid gap-6 lg:grid-cols-3" style={{ gap: '24px' }}>
+      <div className="mb-6 md:mb-8 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Profit & Loss Trend */}
         <Card className="lg:col-span-2" style={{ minHeight: '300px' }}>
-          <CardHeader className="flex flex-col items-start justify-between">
-            <CardTitle className="text-base font-medium" style={{ fontSize: '16px' }}>Profit & Loss Trend</CardTitle>
-            <CardDescription style={{ fontSize: '14px' }}>The profit and loss trend for last 8 months</CardDescription>
+          <CardHeader className="flex flex-col items-start justify-between space-y-2">
+            <CardTitle className="text-base font-medium">Profit & Loss Trend</CardTitle>
+            <CardDescription className="text-sm">
+              The profit and loss trend for last 8 months
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-4">
             <ProfitChart />
           </CardContent>
         </Card>
@@ -128,14 +132,16 @@ export function Dashboard() {
       </div>
 
       {/* Second Row Charts */}
-      <div className="mb-8 grid gap-6 lg:grid-cols-3" style={{ gap: '24px' }}>
+      <div className="mb-6 md:mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {/* Project Type Performance */}
         <Card style={{ minHeight: '300px' }}>
           <CardHeader>
-            <CardTitle className="text-base font-medium" style={{ fontSize: '16px' }}>Profit by Project Type</CardTitle>
-            <CardDescription style={{ fontSize: '14px' }}>Current project types distribution</CardDescription>
+            <CardTitle className="text-base font-medium">Profit by Project Type</CardTitle>
+            <CardDescription className="text-sm">
+              Current project types distribution
+            </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-4">
             <ProjectTypeChart />
           </CardContent>
         </Card>
@@ -148,14 +154,14 @@ export function Dashboard() {
       </div>
 
       {/* Cost Analysis - Enhanced */}
-      <div className="mb-8">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-foreground" style={{ fontSize: '20px' }}>Cost Analysis</h2>
-          <Button variant="ghost" size="sm" className="text-primary" style={{ fontSize: '14px' }}>
+      <div className="mb-6 md:mb-8">
+        <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground">Cost Analysis</h2>
+          <Button variant="ghost" size="sm" className="text-primary w-full sm:w-auto justify-center">
             View Detailed Report
           </Button>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" style={{ gap: '16px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
           {costAnalysisData.map((item) => (
             <CostAnalysisCard
               key={item.id}
@@ -172,30 +178,32 @@ export function Dashboard() {
       </div>
 
       {/* Upcoming Milestones */}
-      <div className="mb-8">
+      <div className="mb-6 md:mb-8">
         <UpcomingMilestonesChart />
       </div>
 
       {/* Projects Table */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle style={{ fontSize: '18px' }}>All Projects</CardTitle>
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <CardTitle className="text-lg">All Projects</CardTitle>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <input
                 type="text"
                 placeholder="Search projects..."
-                className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                style={{ fontSize: '14px', height: '36px' }}
+                className="w-full sm:w-auto rounded-lg border border-border bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                style={{ fontSize: '14px', minHeight: '36px' }}
               />
-              <Button variant="outline" size="sm" style={{ fontSize: '14px', height: '36px' }}>
+              <Button variant="outline" size="sm" className="w-full sm:w-auto justify-center">
                 Export
               </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <ProjectsTable />
+          <div className="overflow-x-auto">
+            <ProjectsTable />
+          </div>
         </CardContent>
       </Card>
     </div>

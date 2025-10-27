@@ -65,18 +65,18 @@ export default function ClientsPage() {
       <Sidebar />
       <main className="flex-1 p-8 overflow-auto">
         <div className="w-full">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Clients</h1>
               <p className="text-gray-600 mt-1">Manage your client relationships</p>
             </div>
-            <Button>
+            <Button className="lg:flex lg:items-center mt-6 sm:mt-0">
               <Plus className="w-4 h-4 mr-2" />
               Add Client
             </Button>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-4 mb-6">
             <Card className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -133,7 +133,7 @@ export default function ClientsPage() {
             </div>
           </Card>
 
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {clients.map((client) => (
               <Card key={client.id} className="p-6 hover:shadow-lg transition-shadow">
                 <div className="flex flex-col gap-4">

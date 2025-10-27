@@ -69,104 +69,111 @@ export default function MaterialsPage() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       <Sidebar />
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="w-full">
-          <div className="flex items-center justify-between mb-8">
+          {/* Header Section */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Materials Catalog</h1>
-              <p className="text-gray-600 mt-1">Manage your materials inventory and pricing</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Materials Catalog</h1>
+              <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Manage your materials inventory and pricing</p>
             </div>
-            <Button>
+            <Button className="w-full sm:w-auto">
               <Plus className="w-4 h-4 mr-2" />
               Add Material
             </Button>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 mb-8">
-            <Card className="p-6">
+          {/* Stats Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8">
+            <Card className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Total Materials</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">156</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Total Materials</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">156</p>
                 </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Package className="w-6 h-6 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Package className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Categories</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">12</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Categories</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">12</p>
                 </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <SquareStack className="w-6 h-6 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <SquareStack className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Low Stock Items</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">8</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Low Stock Items</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">8</p>
                 </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <AlertCircle className="w-6 h-6 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <AlertCircle className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-4 sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Total Value</p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">€142k</p>
+                  <p className="text-xs sm:text-sm text-gray-600">Total Value</p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">€142k</p>
                 </div>
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-6 h-6 text-primary-foreground" />
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
                 </div>
               </div>
             </Card>
           </div>
 
-          <Card className="p-6 mb-6">
-            <div className="flex items-center gap-4">
+          {/* Search and Filters */}
+          <Card className="p-4 sm:p-6 mb-4 sm:mb-6">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <Input placeholder="Search materials..." className="pl-10" />
+                <Input placeholder="Search materials..." className="pl-10 w-full" />
               </div>
-              <Select defaultValue="all">
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Categories</SelectItem>
-                  <SelectItem value="flooring">Flooring</SelectItem>
-                  <SelectItem value="tiles">Tiles</SelectItem>
-                  <SelectItem value="paint">Paint</SelectItem>
-                  <SelectItem value="lighting">Lighting</SelectItem>
-                  <SelectItem value="stone">Stone</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select defaultValue="all-stock">
-                <SelectTrigger className="w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all-stock">All Stock</SelectItem>
-                  <SelectItem value="in-stock">In Stock</SelectItem>
-                  <SelectItem value="low-stock">Low Stock</SelectItem>
-                  <SelectItem value="out-stock">Out of Stock</SelectItem>
-                </SelectContent>
-              </Select>
+              <div className="flex flex-col xs:flex-row gap-3 w-full sm:w-auto">
+                <Select defaultValue="all">
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Categories</SelectItem>
+                    <SelectItem value="flooring">Flooring</SelectItem>
+                    <SelectItem value="tiles">Tiles</SelectItem>
+                    <SelectItem value="paint">Paint</SelectItem>
+                    <SelectItem value="lighting">Lighting</SelectItem>
+                    <SelectItem value="stone">Stone</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select defaultValue="all-stock">
+                  <SelectTrigger className="w-full sm:w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all-stock">All Stock</SelectItem>
+                    <SelectItem value="in-stock">In Stock</SelectItem>
+                    <SelectItem value="low-stock">Low Stock</SelectItem>
+                    <SelectItem value="out-stock">Out of Stock</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </Card>
 
-          <Card className="p-6">
-            <div className="overflow-x-auto">
+          {/* Materials Table/Cards */}
+          <Card className="p-4 sm:p-6">
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
@@ -236,6 +243,70 @@ export default function MaterialsPage() {
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-3">
+              {materials.map((material) => {
+                const stockStatus = material.stock < material.minStock ? "low" : "good"
+                return (
+                  <div key={material.id} className="border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50">
+                    {/* Header with Material Info and Status */}
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                          <Package className="w-4 h-4 text-primary-foreground" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-900">{material.name}</h3>
+                          <p className="text-xs text-gray-500 mt-1">Last: {material.lastOrdered}</p>
+                        </div>
+                      </div>
+                      <span
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
+                          stockStatus === "low" ? "bg-amber-100 text-amber-800" : "bg-green-100 text-success"
+                        }`}
+                      >
+                        {stockStatus === "low" ? "Low" : "In Stock"}
+                      </span>
+                    </div>
+
+                    {/* Category and Supplier */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                        {material.category}
+                      </span>
+                      <span className="text-xs text-gray-600 truncate flex-1">{material.supplier}</span>
+                    </div>
+
+                    {/* Stock and Pricing Info */}
+                    <div className="grid grid-cols-2 gap-4 text-xs mb-3">
+                      <div>
+                        <p className="text-gray-600">Current Stock</p>
+                        <p className="font-semibold text-gray-900 mt-1">
+                          {material.stock} {material.unit}
+                        </p>
+                        <p className="text-gray-500">Min: {material.minStock}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-600">Unit Price</p>
+                        <p className="font-semibold text-gray-900 mt-1">€{material.price.toFixed(2)}</p>
+                        <p className="text-gray-500">Per {material.unit}</p>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex gap-2 pt-3 border-t border-gray-100">
+                      <Button size="sm" variant="outline" className="flex-1 text-xs">
+                        Edit
+                      </Button>
+                      <Button size="sm" variant="outline" className="flex-1 text-xs">
+                        Order
+                      </Button>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </Card>
         </div>

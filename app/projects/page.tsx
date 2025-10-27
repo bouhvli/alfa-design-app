@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Sidebar } from "@/components/sidebar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
@@ -178,7 +178,7 @@ export default function ProjectsPage() {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-sm font-medium text-gray-600">Total Projects</CardTitle>
@@ -198,7 +198,7 @@ export default function ProjectsPage() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Active Projects</CardTitle>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <Users className="h-6 w-46 text-primary-foreground" />
+                  <Users className="h-6 w-6 text-primary-foreground" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -215,7 +215,7 @@ export default function ProjectsPage() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Total Budget</CardTitle>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <ArrowUp className="h-4 w-4 text-primary-foreground" />
+                  <ArrowUp className="h-6 w-6 text-primary-foreground" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -232,7 +232,7 @@ export default function ProjectsPage() {
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-600">Avg. Progress</CardTitle>
                 <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                  <ArrowDown className="h-4 w-4 text-primary-foreground" />
+                  <ArrowDown className="h-6 w-6 text-primary-foreground" />
                 </div>
               </CardHeader>
               <CardContent>
@@ -248,57 +248,68 @@ export default function ProjectsPage() {
 
           {/* Filters and Search */}
           <Card className="mb-6">
-            <CardContent className=" w-full">
-              <div className="flex flex-col sm:flex-row gap-4 items-center w-full justify-between">
-                <div className="relative flex-1 w-full">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-                  <Input
-                    placeholder="Search projects or clients..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10"
-                  />
-                </div>
+  <CardContent className="w-full p-4 sm:p-6">
+    <div className="flex flex-col gap-4 w-full">
+      {/* Search Input - Full width on all screens */}
+      <div className="relative w-full">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <Input
+          placeholder="Search projects or clients..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="pl-10 w-full"
+        />
+      </div>
 
-                <div className="flex gap-2 w-full sm:w-auto">
-                  <select
-                    value={statusFilter}
-                    onChange={(e) => setStatusFilter(e.target.value)}
-                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="all">All Status</option>
-                    <option value="Planning">Planning</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Completed">Completed</option>
-                    <option value="On Hold">On Hold</option>
-                  </select>
+      {/* Filters Row */}
+      <div className="flex flex-row xs:flex-row gap-3 w-full">
+        {/* Status Filter */}
+        <div className="flex-1 min-w-0">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="all">All Status</option>
+            <option value="Planning">Planning</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="On Hold">On Hold</option>
+          </select>
+        </div>
 
-                  <select
-                    value={typeFilter}
-                    onChange={(e) => setTypeFilter(e.target.value)}
-                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="all">All Types</option>
-                    <option value="Residential">Residential</option>
-                    <option value="Commercial">Commercial</option>
-                    <option value="Hospitality">Hospitality</option>
-                    <option value="Healthcare">Healthcare</option>
-                  </select>
+        {/* Type Filter */}
+        <div className="flex-1 min-w-0">
+          <select
+            value={typeFilter}
+            onChange={(e) => setTypeFilter(e.target.value)}
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="all">All Types</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Hospitality">Hospitality</option>
+            <option value="Healthcare">Healthcare</option>
+          </select>
+        </div>
 
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  >
-                    <option value="name">Sort by Name</option>
-                    <option value="budget">Sort by Budget</option>
-                    <option value="progress">Sort by Progress</option>
-                    <option value="deadline">Sort by Deadline</option>
-                  </select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Sort Filter */}
+        <div className="flex-1 min-w-0">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="name">Sort by Name</option>
+            <option value="budget">Sort by Budget</option>
+            <option value="progress">Sort by Progress</option>
+            <option value="deadline">Sort by Deadline</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </CardContent>
+</Card>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">

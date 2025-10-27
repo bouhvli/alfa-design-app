@@ -133,19 +133,19 @@ export default function CostCalculationPage() {
       <main className="flex-1 p-8 overflow-auto">
         <div className="mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col md:flex-row xl:flex-row ls:flex-row items-end lg:items-center justify-between mb-4">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Cost Calculator</h1>
               <p className="text-gray-600 mt-1">Quickly calculate project costs and generate quotes</p>
             </div>
-            <div className="flex gap-3">
-              <Button variant="outline" onClick={clearAllItems}>
-                <Trash2 className="w-4 h-4 mr-2" />
-                Clear All
+            <div className="flex gap-3 mt-2 md:mt-0 lg:mt-0">
+              <Button variant="outline" onClick={clearAllItems} className="w-auto md:w-auto lg:w-auto justify-center">
+                <Trash2 className="w-4 h-4 mr-0" />
+                <p className="hidden sm:block">Clear All</p>
               </Button>
-              <Button>
-                <Download className="w-4 h-4 mr-2" />
-                Save Quote
+              <Button className="w-auto md:w-auto lg:w-auto justify-center" onClick={copyTotalPrice}>
+                <Download className="w-4 h-4 mr-0" />
+                <p className="hidden sm:block">Save Quote</p>
               </Button>
             </div>
           </div>
@@ -472,68 +472,71 @@ export default function CostCalculationPage() {
               </Card>
 
               {/* Final Quote */}
-              <Card className="p-6 bg-gradient-to-br from-primary/10 to-success/10">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-semibold text-gray-900">Final Quote</h2>
-                  <Button variant="outline" size="sm" onClick={copyTotalPrice}>
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Total
-                  </Button>
-                </div>
+              <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary/10 to-success/10">
+  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-0">
+    <h2 className="text-lg font-semibold text-gray-900 text-center sm:text-left">Final Quote</h2>
+    <Button variant="outline" size="sm" onClick={copyTotalPrice} className="w-full sm:w-auto">
+      <Copy className="w-4 h-4 mr-2" />
+      Copy Total
+    </Button>
+  </div>
 
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Material Costs</span>
-                        <span className="font-semibold text-gray-900">
-                          €{totalMaterials.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Labor Costs</span>
-                        <span className="font-semibold text-gray-900">
-                          €{totalLabor.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="text-gray-700 font-medium">Subtotal</span>
-                        <span className="font-semibold text-gray-900">
-                          €{subtotal.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
+  <div className="space-y-4 mt-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      {/* Left Column - Costs */}
+      <div className="space-y-3">
+        <div className="flex justify-between">
+          <span className="text-sm sm:text-base text-gray-600">Material Costs</span>
+          <span className="font-semibold text-gray-900 text-sm sm:text-base">
+            €{totalMaterials.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-sm sm:text-base text-gray-600">Labor Costs</span>
+          <span className="font-semibold text-gray-900 text-sm sm:text-base">
+            €{totalLabor.toFixed(2)}
+          </span>
+        </div>
+        <div className="flex justify-between pt-2 border-t">
+          <span className="text-sm sm:text-base text-gray-700 font-medium">Subtotal</span>
+          <span className="font-semibold text-gray-900 text-sm sm:text-base">
+            €{subtotal.toFixed(2)}
+          </span>
+        </div>
+      </div>
 
-                    <div className="flex flex-col justify-center space-y-3 row-span-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Profit ({profitMargin}%)</span>
-                        <span className="font-semibold text-success">
-                          €{profitAmount.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="pt-2 border-t">
-                        <div className="flex justify-between items-center py-2 rounded-lg">
-                          <span className="text-lg font-semibold text-gray-900">
-                            Total Price
-                          </span>
-                          <span className="text-2xl font-bold text-primary">
-                            €{totalPrice.toFixed(2)}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Right Column - Profit & Total */}
+      <div className="flex flex-col justify-center space-y-3">
+        <div className="flex justify-between">
+          <span className="text-sm sm:text-base text-gray-600">Profit ({profitMargin}%)</span>
+          <span className="font-semibold text-success text-sm sm:text-base">
+            €{profitAmount.toFixed(2)}
+          </span>
+        </div>
+        <div className="pt-2 border-t">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 py-2 rounded-lg">
+            <span className="text-base sm:text-lg font-semibold text-gray-900 text-center sm:text-left">
+              Total Price
+            </span>
+            <span className="text-xl sm:text-2xl font-bold text-primary text-center sm:text-right">
+              €{totalPrice.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                  <div className="pt-4 border-t">
-                    <div className="flex gap-3">
-                      <Button className="flex-1">
-                        <Download className="w-4 h-4 mr-2" />
-                        Save Quote
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </Card>
+    {/* Save Button */}
+    <div className="pt-4 border-t">
+      <div className="flex gap-3">
+        <Button className="flex-1 w-full">
+          <Download className="w-4 h-4 mr-2" />
+          Save Quote
+        </Button>
+      </div>
+    </div>
+  </div>
+</Card>
             </div>
           </div>
         </div>

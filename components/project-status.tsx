@@ -36,8 +36,8 @@ export function ProjectStatusChart() {
             </CardHeader>
             <CardContent className="pt-4">
                 <div className="flex flex-col xl:flex-row items-center gap-6">
-                    {/* Pie Chart - Fixed container with proper constraints */}
-                    <div className="w-full xl:w-1/2 h-[200px] sm:h-[250px] md:h-[300px] xl:h-[200px] flex justify-center">
+                    {/* Pie Chart - Hidden on mobile, visible on xl and larger */}
+                    <div className="hidden xl:block w-full xl:w-1/2 h-[200px] sm:h-[250px] md:h-[300px] xl:h-[200px] flex justify-center">
                         <div className="w-full max-w-[280px] h-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
@@ -67,7 +67,7 @@ export function ProjectStatusChart() {
                         </div>
                     </div>
 
-                    {/* Stats - Improved responsive layout */}
+                    {/* Stats - Full width on mobile, half width on xl */}
                     <div className="w-full xl:w-1/2 space-y-4">
                         <div className="text-center xl:text-left">
                             <div className="text-2xl sm:text-3xl font-bold text-foreground">

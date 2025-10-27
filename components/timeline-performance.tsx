@@ -37,7 +37,7 @@ export function TimelinePerformanceChart() {
       </CardHeader>
       <CardContent style={{ padding: '1rem' }}>
         <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={chartData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+          <BarChart data={chartData} margin={{ top: 0, right: 30, left: 0, bottom: 5 }}>
             <CartesianGrid vertical={false} stroke="#f3f4f6" />
             <XAxis 
               dataKey="project" 
@@ -45,6 +45,10 @@ export function TimelinePerformanceChart() {
               tickLine={false}
               axisLine={false}
               stroke="#6b7280"
+              tickMargin={8}
+              angle={-45}
+              textAnchor="end"
+              height={60}
             />
             <YAxis 
               fontSize={12}

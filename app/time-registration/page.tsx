@@ -58,18 +58,18 @@ export default function TimeRegistrationPage() {
       <Sidebar />
       <main className="flex-1 p-8">
         <div className="w-full">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Time Registration</h1>
               <p className="text-gray-600 mt-1">Track and manage work hours</p>
             </div>
-            <Button>
+            <Button className="lg:flex lg:items-center mt-6 sm:mt-0">
               <Plus className="w-4 h-4 mr-2" />
               Add Manual Entry
             </Button>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 sm:gap-6 mb-8">
             <Card className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -173,12 +173,12 @@ export default function TimeRegistrationPage() {
             </div>
           </Card> */}
 
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-semibold text-gray-900">Recent Time Entries</h2>
-              <div className="flex gap-2">
+          <Card className="p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <h2 className="text-lg font-semibold text-gray-900 text-center sm:text-left">Recent Time Entries</h2>
+              <div className="flex justify-center sm:justify-end">
                 <Select defaultValue="week">
-                  <SelectTrigger className="w-40">
+                  <SelectTrigger className="w-full sm:w-40">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -190,7 +190,8 @@ export default function TimeRegistrationPage() {
               </div>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-gray-200">
@@ -211,9 +212,8 @@ export default function TimeRegistrationPage() {
                       <td className="py-4 px-4 text-sm font-semibold text-gray-900">{entry.hours}h</td>
                       <td className="py-4 px-4">
                         <span
-                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            entry.status === "Approved" ? "bg-green-100 text-success" : "bg-amber-100 text-amber-800"
-                          }`}
+                          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${entry.status === "Approved" ? "bg-green-100 text-success" : "bg-amber-100 text-amber-800"
+                            }`}
                         >
                           {entry.status}
                         </span>
@@ -227,6 +227,43 @@ export default function TimeRegistrationPage() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden space-y-4">
+              {timeEntries.map((entry) => (
+                <div key={entry.id} className="border border-gray-200 rounded-lg p-4 bg-white hover:bg-gray-50">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-sm">{entry.project}</h3>
+                      <p className="text-xs text-gray-600 mt-1">{entry.task}</p>
+                    </div>
+                    <span
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${entry.status === "Approved" ? "bg-green-100 text-success" : "bg-amber-100 text-amber-800"
+                        }`}
+                    >
+                      {entry.status}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 text-xs">
+                    <div>
+                      <p className="text-gray-600">Date</p>
+                      <p className="font-medium text-gray-900 mt-1">{entry.date}</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-600">Hours</p>
+                      <p className="font-semibold text-gray-900 mt-1">{entry.hours}h</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-gray-100">
+                    <Button size="sm" variant="ghost" className="w-full text-amber-600 hover:text-primary-foreground text-xs">
+                      Edit Time Entry
+                    </Button>
+                  </div>
+                </div>
+              ))}
             </div>
           </Card>
         </div>

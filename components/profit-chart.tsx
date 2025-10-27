@@ -24,8 +24,12 @@ const colors = {
 export function ProfitChart() {
   return (
     <ResponsiveContainer width="100%" height={300}>
-      <LineChart data={data} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke={colors.border} />
+      <LineChart data={data} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke={colors.border}
+          vertical={false}
+        />
         <XAxis 
           dataKey="month" 
           stroke={colors.muted} 
@@ -37,6 +41,7 @@ export function ProfitChart() {
           stroke={colors.muted} 
           fontSize={12} 
           tickFormatter={(value) => `€${value / 1000}k`}
+          tickMargin={8}
           tickLine={false}
           axisLine={false}
         />
