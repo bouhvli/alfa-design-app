@@ -88,26 +88,25 @@ export function AddProjectDialogEnhanced() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button>
+                <Button className="w-full sm:w-auto">
                     <Plus className="w-4 h-4 mr-2" />
                     New Project
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
-                <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
+            <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+                <DialogHeader className="px-1 sm:px-0">
+                    <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
                         Add New Project
                     </DialogTitle>
-                    <DialogDescription>
+                    <DialogDescription className="text-sm sm:text-base">
                         Create a new project with all the necessary details. Fields marked with * are required.
                     </DialogDescription>
                 </DialogHeader>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 px-1 sm:px-0">
                     {/* Project Information Section */}
-                    <div className="space-y-4">
-
-                        <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-3 sm:space-y-4">
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4">
                             {/* Project Name */}
                             <div className="grid gap-2">
                                 <Label htmlFor="projectName" className="text-sm font-medium">
@@ -118,24 +117,24 @@ export function AddProjectDialogEnhanced() {
                                     value={formData.projectName}
                                     onChange={(e) => handleInputChange("projectName", e.target.value)}
                                     placeholder="Enter project name"
-                                    className="h-10"
+                                    className="h-10 text-sm sm:text-base"
                                     required
                                 />
                             </div>
 
                             {/* Category & Status Row */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="category" className="text-sm font-medium">
                                         Category *
                                     </Label>
                                     <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
-                                        <SelectTrigger className="h-10 w-full">
+                                        <SelectTrigger className="h-10 w-full text-sm sm:text-base">
                                             <SelectValue placeholder="Select category" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {categories.map((category) => (
-                                                <SelectItem key={category} value={category}>
+                                                <SelectItem key={category} value={category} className="text-sm">
                                                     {category}
                                                 </SelectItem>
                                             ))}
@@ -148,12 +147,12 @@ export function AddProjectDialogEnhanced() {
                                         Status
                                     </Label>
                                     <Select value={formData.status} onValueChange={(value) => handleInputChange("status", value)}>
-                                        <SelectTrigger className="h-10 w-full">
+                                        <SelectTrigger className="h-10 w-full text-sm sm:text-base">
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {statusOptions.map((status) => (
-                                                <SelectItem key={status} value={status}>
+                                                <SelectItem key={status} value={status} className="text-sm">
                                                     {status}
                                                 </SelectItem>
                                             ))}
@@ -165,9 +164,8 @@ export function AddProjectDialogEnhanced() {
                     </div>
 
                     {/* Client Information Section */}
-                    <div className="space-y-4">
-
-                        <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-3 sm:space-y-4">
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4">
                             {/* Client Name */}
                             <div className="grid gap-2">
                                 <Label htmlFor="clientName" className="text-sm font-medium">
@@ -178,7 +176,7 @@ export function AddProjectDialogEnhanced() {
                                     value={formData.clientName}
                                     onChange={(e) => handleInputChange("clientName", e.target.value)}
                                     placeholder="Enter client name"
-                                    className="h-10"
+                                    className="h-10 text-sm sm:text-base"
                                     required
                                 />
                             </div>
@@ -189,12 +187,12 @@ export function AddProjectDialogEnhanced() {
                                     Client Type *
                                 </Label>
                                 <Select value={formData.clientType} onValueChange={(value) => handleInputChange("clientType", value)}>
-                                    <SelectTrigger className="h-10 w-full">
+                                    <SelectTrigger className="h-10 w-full text-sm sm:text-base">
                                         <SelectValue placeholder="Select client type" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {clientTypes.map((type) => (
-                                            <SelectItem key={type} value={type}>
+                                            <SelectItem key={type} value={type} className="text-sm">
                                                 {type}
                                             </SelectItem>
                                         ))}
@@ -205,11 +203,10 @@ export function AddProjectDialogEnhanced() {
                     </div>
 
                     {/* Timeline & Financial Section */}
-                    <div className="space-y-4">
-
-                        <div className="grid grid-cols-1 gap-4">
+                    <div className="space-y-3 sm:space-y-4">
+                        <div className="grid grid-cols-1 gap-3 sm:gap-4">
                             {/* Date Range */}
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="startDate" className="text-sm font-medium">
                                         Start Date *
@@ -219,7 +216,7 @@ export function AddProjectDialogEnhanced() {
                                         type="date"
                                         value={formData.startDate}
                                         onChange={(e) => handleInputChange("startDate", e.target.value)}
-                                        className="h-10"
+                                        className="h-10 text-sm sm:text-base"
                                         required
                                     />
                                 </div>
@@ -232,7 +229,7 @@ export function AddProjectDialogEnhanced() {
                                         type="date"
                                         value={formData.endDate}
                                         onChange={(e) => handleInputChange("endDate", e.target.value)}
-                                        className="h-10"
+                                        className="h-10 text-sm sm:text-base"
                                         required
                                     />
                                 </div>
@@ -253,7 +250,7 @@ export function AddProjectDialogEnhanced() {
                                         value={formData.profitMargin}
                                         onChange={(e) => handleInputChange("profitMargin", e.target.value)}
                                         placeholder="0.0"
-                                        className="h-10 pr-12"
+                                        className="h-10 pr-12 text-sm sm:text-base"
                                         required
                                     />
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -268,19 +265,19 @@ export function AddProjectDialogEnhanced() {
                     </div>
 
                     {/* Footer Actions */}
-                    <DialogFooter className="gap-3 pt-4 border-t">
+                    <DialogFooter className="gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-gray-200">
                         <DialogClose asChild>
                             <Button
                                 type="button"
                                 variant="outline"
-                                className="flex-1 sm:flex-none"
+                                className="flex-1 sm:flex-none order-2 sm:order-1"
                             >
                                 Cancel
                             </Button>
                         </DialogClose>
                         <Button
                             type="submit"
-                            className="flex-1 sm:flex-none"
+                            className="flex-1 sm:flex-none order-1 sm:order-2"
                         >
                             Save Project
                         </Button>
