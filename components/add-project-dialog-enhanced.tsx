@@ -216,7 +216,7 @@ export function AddProjectDialogEnhanced() {
                                         type="date"
                                         value={formData.startDate}
                                         onChange={(e) => handleInputChange("startDate", e.target.value)}
-                                        className="h-10 text-sm sm:text-base"
+                                        className="h-10 w-full text-sm sm:text-base"
                                         required
                                     />
                                 </div>
@@ -229,7 +229,7 @@ export function AddProjectDialogEnhanced() {
                                         type="date"
                                         value={formData.endDate}
                                         onChange={(e) => handleInputChange("endDate", e.target.value)}
-                                        className="h-10 text-sm sm:text-base"
+                                        className="h-10 w-full text-sm sm:text-base"
                                         required
                                     />
                                 </div>
@@ -250,7 +250,7 @@ export function AddProjectDialogEnhanced() {
                                         value={formData.profitMargin}
                                         onChange={(e) => handleInputChange("profitMargin", e.target.value)}
                                         placeholder="0.0"
-                                        className="h-10 pr-12 text-sm sm:text-base"
+                                        className="h-10 w-full pr-12 text-sm sm:text-base"
                                         required
                                     />
                                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
