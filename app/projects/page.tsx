@@ -167,12 +167,12 @@ export default function ProjectsPage() {
       <main className="flex-1 p-8 overflow-auto">
         <div className="mx-auto">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
               <p className="text-gray-600 mt-1">Manage and track all your interior design projects</p>
             </div>
-            <div className="flex gap-3">
+            <div className="flex justify-end gap-3 mt-4 sm:mt-0">
               <AddProjectDialogEnhanced />
             </div>
           </div>
@@ -338,12 +338,11 @@ export default function ProjectsPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="text-sm">
-                      <DropdownMenuItem className="text-xs sm:text-sm">
-                        <Eye className="w-4 h-4 mr-2" />
+                      <DropdownMenuItem className="text-xs font-medium sm:text-sm text-gray-600">
                         View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem className="text-xs sm:text-sm">Edit Project</DropdownMenuItem>
-                      <DropdownMenuItem className="text-xs sm:text-sm text-red-600">
+                      <DropdownMenuItem className="text-xs font-medium sm:text-sm text-gray-600">Edit Project</DropdownMenuItem>
+                      <DropdownMenuItem className="text-xs font-medium sm:text-sm text-red-700">
                         Archive Project
                       </DropdownMenuItem>
                     </DropdownMenuContent>
