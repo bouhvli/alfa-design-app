@@ -88,7 +88,7 @@ export function AddProjectDialogEnhanced() {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="w-full sm:w-auto">
+                <Button>
                     <Plus className="w-4 h-4 mr-2" />
                     New Project
                 </Button>
