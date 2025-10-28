@@ -167,7 +167,7 @@ export default function ProjectsPage() {
       <main className="flex-1 p-8 overflow-auto">
         <div className="mx-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
               <p className="text-gray-600 mt-1">Manage and track all your interior design projects</p>
