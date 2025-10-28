@@ -248,125 +248,130 @@ export default function ProjectsPage() {
 
           {/* Filters and Search */}
           <Card className="mb-6">
-  <CardContent className="w-full p-4 sm:p-6">
-    <div className="flex flex-col gap-4 w-full">
-      {/* Search Input - Full width on all screens */}
-      <div className="relative w-full">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-        <Input
-          placeholder="Search projects or clients..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 w-full"
-        />
-      </div>
+            <CardContent className="w-full p-4 sm:p-6">
+              <div className="flex flex-col gap-4 w-full">
+                {/* Search Input - Full width on all screens */}
+                <div className="relative w-full">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input
+                    placeholder="Search projects or clients..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 w-full"
+                  />
+                </div>
 
-      {/* Filters Row */}
-      <div className="flex flex-row xs:flex-row gap-3 w-full">
-        {/* Status Filter */}
-        <div className="flex-1 min-w-0">
-          <select
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="all">All Status</option>
-            <option value="Planning">Planning</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-            <option value="On Hold">On Hold</option>
-          </select>
-        </div>
+                {/* Filters Row */}
+                <div className="flex flex-row xs:flex-row gap-3 w-full">
+                  {/* Status Filter */}
+                  <div className="flex-1 min-w-0">
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value)}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="all">All Status</option>
+                      <option value="Planning">Planning</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
+                      <option value="On Hold">On Hold</option>
+                    </select>
+                  </div>
 
-        {/* Type Filter */}
-        <div className="flex-1 min-w-0">
-          <select
-            value={typeFilter}
-            onChange={(e) => setTypeFilter(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="all">All Types</option>
-            <option value="Residential">Residential</option>
-            <option value="Commercial">Commercial</option>
-            <option value="Hospitality">Hospitality</option>
-            <option value="Healthcare">Healthcare</option>
-          </select>
-        </div>
+                  {/* Type Filter */}
+                  <div className="flex-1 min-w-0">
+                    <select
+                      value={typeFilter}
+                      onChange={(e) => setTypeFilter(e.target.value)}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="all">All Types</option>
+                      <option value="Residential">Residential</option>
+                      <option value="Commercial">Commercial</option>
+                      <option value="Hospitality">Hospitality</option>
+                      <option value="Healthcare">Healthcare</option>
+                    </select>
+                  </div>
 
-        {/* Sort Filter */}
-        <div className="flex-1 min-w-0">
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          >
-            <option value="name">Sort by Name</option>
-            <option value="budget">Sort by Budget</option>
-            <option value="progress">Sort by Progress</option>
-            <option value="deadline">Sort by Deadline</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </CardContent>
-</Card>
+                  {/* Sort Filter */}
+                  <div className="flex-1 min-w-0">
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <option value="name">Sort by Name</option>
+                      <option value="budget">Sort by Budget</option>
+                      <option value="progress">Sort by Progress</option>
+                      <option value="deadline">Sort by Deadline</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
             {filteredProjects.map((project) => (
-              <Card key={project.id} className="p-6 hover:shadow-lg transition-shadow">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900">{project.name}</h3>
-                      <Badge className={getStatusColor(project.status)}>
-                        {project.status}
-                      </Badge>
-                      <Badge variant="outline" className={getTypeColor(project.type)}>
-                        {project.type}
-                      </Badge>
+              <Card key={project.id} className="p-4 sm:p-6 hover:shadow-lg transition-shadow">
+                {/* Header Section */}
+                <div className="flex items-start justify-between mb-3 sm:mb-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex flex-col xs:flex-row xs:items-center gap-2 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900 truncate">{project.name}</h3>
+                      <div className="flex items-center gap-1 flex-wrap">
+                        <Badge className={`text-xs ${getStatusColor(project.status)}`}>
+                          {project.status}
+                        </Badge>
+                        <Badge variant="outline" className={`text-xs ${getTypeColor(project.type)}`}>
+                          {project.type}
+                        </Badge>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-600">Client: {project.client}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 truncate">Client: {project.client}</p>
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0 flex-shrink-0 ml-2">
                         <MoreVertical className="w-4 h-4" />
                       </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
+                    <DropdownMenuContent align="end" className="text-sm">
+                      <DropdownMenuItem className="text-xs sm:text-sm">
                         <Eye className="w-4 h-4 mr-2" />
                         View Details
                       </DropdownMenuItem>
-                      <DropdownMenuItem>Edit Project</DropdownMenuItem>
-                      <DropdownMenuItem className="text-red-600">
+                      <DropdownMenuItem className="text-xs sm:text-sm">Edit Project</DropdownMenuItem>
+                      <DropdownMenuItem className="text-xs sm:text-sm text-red-600">
                         Archive Project
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4">
                   <div>
                     <p className="text-xs text-gray-600 mb-1">Budget</p>
-                    <p className="text-sm font-semibold text-gray-900">€{project.budget.toLocaleString()}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">€{project.budget.toLocaleString()}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-600 mb-1">Spent</p>
-                    <p className="text-sm font-semibold text-gray-900">€{project.spent.toLocaleString()}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">€{project.spent.toLocaleString()}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-600 mb-1">Start Date</p>
-                    <p className="text-sm font-semibold text-gray-900">{project.startDate}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">{project.startDate}</p>
                   </div>
                   <div>
                     <p className="text-xs text-gray-600 mb-1">Deadline</p>
-                    <p className="text-sm font-semibold text-gray-900">{project.deadline}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">{project.deadline}</p>
                   </div>
                 </div>
 
-                <div className="mb-4">
+                {/* Progress Bar */}
+                <div className="mb-3 sm:mb-4">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs text-gray-600">Progress</span>
                     <span className="text-xs font-semibold text-gray-900">{project.progress}%</span>
@@ -379,12 +384,13 @@ export default function ProjectsPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <Users className="w-4 h-4" />
+                {/* Footer */}
+                <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-2 pt-3 sm:pt-4 border-t border-gray-200">
+                  <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+                    <Users className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span>{project.team} members</span>
                   </div>
-                  <div className="text-sm font-semibold text-success">
+                  <div className="text-xs sm:text-sm font-semibold text-success">
                     {project.profitMargin}% margin
                   </div>
                 </div>
